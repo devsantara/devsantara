@@ -15,6 +15,4 @@ const Template: ComponentStory<typeof TitleComponent> = (args) => (
 );
 
 export const Title = Template.bind({});
-Title.args = {
-  children: '',
-};
+Title.args = {};
