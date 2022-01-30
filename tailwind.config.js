@@ -11,6 +11,9 @@ module.exports = {
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
       },
+      fontSize: {
+        md: ['1rem', { lineHeight: '1.6rem' }],
+      },
     },
     colors: {
       transparent: 'transparent',
