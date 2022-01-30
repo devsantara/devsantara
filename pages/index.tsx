@@ -1,9 +1,13 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 
+// components
+import { Title } from '@/components/Title';
+import { Paragraph } from '@/components/Paragraph';
+
 const Home: NextPage = () => {
   return (
-    <div className="grid h-screen place-content-center">
+    <div className="grid h-screen place-content-center text-center">
       <figure className="relative mx-auto mb-2 h-10 w-10">
         <Image
           src="/brand/devsantara-logo.svg"
@@ -11,12 +15,8 @@ const Home: NextPage = () => {
           alt="Devsantara"
         />
       </figure>
-      <h1 className="text-center text-2xl font-semibold text-primary">
-        Devsantara
-      </h1>
-      <p className="text-xs font-light text-black">
-        Next JS, Typescript, TailwindCSS
-      </p>
+      <Title>Devsantara</Title>
+      <Paragraph>Next JS, Typescript, TailwindCSS</Paragraph>
     </div>
   );
 };
