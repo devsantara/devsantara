@@ -11,8 +11,10 @@ const Home: NextPage = () => {
           alt="Devsantara"
         />
       </figure>
-      <h1 className="text-center text-2xl font-semibold">Devsantara</h1>
-      <p className="text-xs font-light text-gray-600">
+      <h1 className="text-center text-2xl font-semibold text-primary">
+        Devsantara
+      </h1>
+      <p className="text-xs font-light text-black">
         Next JS, Typescript, TailwindCSS
       </p>
     </div>
