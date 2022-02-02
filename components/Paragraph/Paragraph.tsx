@@ -9,7 +9,9 @@ interface Props {
 
 const Paragraph: FC<Props> = ({ className, children }) => {
   return (
-    <p className={clsx('text-md text-gray-dark', className)}>{children}</p>
+    <p className={clsx('text-sm text-gray-dark lg:text-md', className)}>
+      {children}
+    </p>
   );
 };
 
