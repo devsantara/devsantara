@@ -1,22 +1,44 @@
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button } from '../Button';
 import { Container } from '../Container';
 import { Img } from '../Img';
 import { SiDiscord } from 'react-icons/si';
 import { GrClose, GrMenu } from 'react-icons/gr';
 import { Navigation } from '../Navigation';
+import clsx from 'clsx';
 
 interface Props {}
 const discordServerInviteLink = 'https://discord.com/invite/fjPnzBqthR';
 
 const Navbar: FC<Props> = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrollDown, setIsScrollDown] = useState(false);
 
   const handleOnClickMenu = () => setIsOpen((prev) => !prev);
+  const onWindowScroll = () => {
+    const { scrollY } = window;
+    if (scrollY > 30) {
+      setIsScrollDown(true);
+    } else {
+      setIsScrollDown(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', onWindowScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onWindowScroll);
+    };
+  }, []);
 
   return (
-    <nav className="border-b border-gray-light bg-white">
+    <nav
+      className={clsx('sticky top-0 z-50 border-gray-light bg-white', {
+        'border-b': isScrollDown,
+      })}
+    >
       <Container className="flex h-14 items-center justify-between pr-0 lg:h-16">
         <div className="flex gap-x-9">
           <Img
