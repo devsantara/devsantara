@@ -17,14 +17,14 @@ const Navigation: FC<Props> = ({ isOpen }) => {
   return (
     <ul
       className={clsx(
-        'fixed top-14 left-0 right-0 bottom-0 gap-x-8 pt-2 text-sm lg:static lg:flex lg:p-0',
+        'fixed top-[57px] left-0 right-0 bottom-0 z-50 h-screen gap-x-8 bg-white pt-2 text-sm lg:static lg:flex lg:h-auto lg:p-0',
         { hidden: !isOpen }
       )}
     >
       {navigationRoutes.map(({ id, name, url }) => (
         <li key={id}>
           <Link href={url}>
-            <a className="flex h-full items-center border-b border-secondary p-4 lg:p-0">
+            <a className="flex h-full items-center border-b border-secondary p-4 lg:border-0 lg:p-0">
               {name}
             </a>
           </Link>
