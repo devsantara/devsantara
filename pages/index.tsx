@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import clsx from 'clsx';
 
 // components
 import { Navbar } from '@/components/Navbar';
@@ -7,7 +8,7 @@ import { Card } from '@/components/Card';
 import { Container } from '@/components/Container';
 import { Img } from '@/components/Img';
 import { Paragraph } from '@/components/Paragraph';
-import clsx from 'clsx';
+import { Footer } from '@/components/Footer';
 
 const features = [
   {
@@ -15,7 +16,7 @@ const features = [
     title: 'Devsantara Communities',
     image: '/icons/feature-communities.svg',
     description:
-      'Berjumpa dengan teman teman yang memiliki tujuan yang sama                seperti kamu, bangun jaringan dengan mereka',
+      'Berjumpa dengan teman teman yang memiliki tujuan yang sama seperti kamu, bangun jaringan dengan mereka',
   },
   {
     id: 2,
@@ -35,17 +36,17 @@ const features = [
 
 const Home: NextPage = () => {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <Navbar />
       <Header />
-      <main>
-        <Container className="relative before:absolute before:right-1/2 before:top-1/2 before:-z-10 before:block before:w-screen before:translate-x-1/2 before:translate-y-1/2 before:border-2 before:border-dashed before:border-primary">
-          <div className="relative grid grid-cols-1 gap-5 xl:mt-16 xl:grid-cols-3">
+      <main className="flex-1">
+        <Container>
+          <div className="relative grid grid-cols-1 gap-x-5 gap-y-3 xl:mt-16 xl:grid-cols-3">
             {features.map((feature, index) => (
               <Card
                 key={feature.id}
                 className={clsx(
-                  'px-5 py-8 text-center sm:px-20 lg:px-60 xl:p-9',
+                  'px-5 py-7 text-center sm:px-20 lg:px-60 xl:p-9',
                   {
                     'relative xl:-top-16': index === 1,
                   }
@@ -54,9 +55,9 @@ const Home: NextPage = () => {
                 <Img
                   src={feature.image}
                   alt="communities"
-                  className="mx-auto mb-2 h-12 w-12"
+                  className="mx-auto mb-2 h-8 w-8 lg:h-12 lg:w-12"
                 />
-                <h2 className="mb-2 text-xl font-medium text-primary">
+                <h2 className="mb-2 text-lg font-medium text-primary lg:text-xl">
                   {feature.title}
                 </h2>
                 <Paragraph>{feature.description}</Paragraph>
@@ -65,7 +66,8 @@ const Home: NextPage = () => {
           </div>
         </Container>
       </main>
-    </>
+      <Footer />
+    </div>
   );
 };
 
