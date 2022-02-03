@@ -28,9 +28,7 @@ const Button: FC<Props> = ({
   iconSize = 'medium',
   onClick,
 }) => {
-  const classes = clsx(
-    'flex h-11 w-full items-center justify-center gap-x-2 px-8'
-  );
+  const classes = clsx('flex h-11 w-full items-center justify-center gap-x-2');
 
   const iconClasses = clsx({
     'text-xl': iconSize === 'medium',
