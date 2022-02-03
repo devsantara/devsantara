@@ -16,6 +16,5 @@ Default.args = {
   className: 'bg-primary text-white text-left',
   isRounded: false,
   // target: '_self',
-  type: 'button',
   onClick: () => {},
 };
