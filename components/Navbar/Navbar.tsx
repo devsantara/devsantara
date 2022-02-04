@@ -38,7 +38,7 @@ const Navbar: FC<Props> = () => {
         'border-b bg-white': isScrollDown,
       })}
     >
-      <Container className="flex h-14 items-center justify-between pr-0 lg:h-16">
+      <Container className="flex h-14 items-center justify-between pr-0 lg:h-16 lg:pr-4">
         <div className="flex gap-x-9">
           <Img
             src="/brand/devsantara-logo.svg"
