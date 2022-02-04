@@ -1,24 +1,29 @@
+import clsx from 'clsx';
 import { FC } from 'react';
-import { BiBook, BiTime } from 'react-icons/bi';
+import { BiBook, BiRevision } from 'react-icons/bi';
 
 interface Props {
-  moduleLength: number;
-  estimatedTime: number;
+  moduleLength?: number;
+  lastUpdate: string;
+  className?: string;
 }
 
-const Stats: FC<Props> = ({ moduleLength, estimatedTime }) => {
+const Stats: FC<Props> = ({ moduleLength, lastUpdate, className }) => {
+  const splitLastUpdate = lastUpdate.split(' ');
+
   return (
-    <ul className="mb-2 flex gap-x-4 text-gray-dark lg:mb-4">
+    <ul className={clsx('flex gap-x-4 text-gray-dark', className)}>
       <li className="flex items-center gap-x-2 text-xs lg:text-sm">
         <BiBook className="text-md lg:text-xl" />
         <span>
-          <strong className="mr-1">{moduleLength}</strong>Modul
+          <strong className="mr-1">{moduleLength || 0}</strong>Modules
         </span>
       </li>
       <li className="flex items-center gap-x-2 text-xs lg:text-sm">
-        <BiTime className="text-md lg:text-xl" />
+        <BiRevision className="text-md lg:text-xl" />
         <span>
-          <strong className="mr-1">{estimatedTime}</strong>Jam
+          <strong className="mr-1">{splitLastUpdate[0]}</strong>
+          {splitLastUpdate.slice(1).join(' ')}
         </span>
       </li>
     </ul>
