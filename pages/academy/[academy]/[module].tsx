@@ -3,13 +3,9 @@ import { GetStaticPropsContext, NextPage } from 'next';
 import path from 'path';
 
 import { readDir, readFile } from '@/utils';
+import { MatterMeta } from '@/types';
 
-interface Props {
-  title: string;
-  description: string;
-  preview: string;
-  theme: string;
-}
+interface Props extends MatterMeta {}
 
 const Module: NextPage<Props> = ({ title }) => {
   return <div>{title}</div>;
