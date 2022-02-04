@@ -11,7 +11,7 @@ const Card: FC<Props> = ({ children, className }) => {
   return (
     <article
       className={clsx(
-        'rounded-2xl border border-gray-light bg-white p-5',
+        'transitio border border-gray-light bg-white p-5 transition-colors duration-200 hover:border-primary hover:shadow-md hover:shadow-secondary',
         className
       )}
     >
