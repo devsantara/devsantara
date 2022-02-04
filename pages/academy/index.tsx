@@ -18,22 +18,15 @@ import { Paragraph } from '@/components/Paragraph';
 import { Screen } from '@/components/Screen';
 import { Title } from '@/components/Title';
 import { Stats } from '@/components/Stats';
+import { MatterMeta } from '@/types';
 
-interface Props {
-  date: string;
-  description: string;
-  draf: boolean;
-  keywords: string[];
-  lastMod: string;
-  preview: string;
-  slug: string;
-  title: string;
-  theme: string;
-  academyList: Props[];
+interface Props extends MatterMeta {
+  academyList: MatterMeta[];
 }
 
 const Academy: NextPage<Props> = ({ title, description, academyList }) => {
   const splitTitle = title.split(' ');
+
   return (
     <Screen>
       <Navbar />
@@ -48,36 +41,36 @@ const Academy: NextPage<Props> = ({ title, description, academyList }) => {
         <Container>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {academyList.map((academy) => (
-              <Card
-                key={academy.title}
-                className="grid grid-cols-1 grid-rows-[auto,1fr] gap-y-4"
-              >
-                <div
-                  style={{ backgroundColor: academy.theme }}
-                  className="grid h-44 place-content-center rounded-xl"
-                >
-                  <Img
-                    src={academy.preview}
-                    alt={academy.title}
-                    className=" aspect-square h-20"
-                  />
-                </div>
-                <div className="flex flex-col justify-between">
-                  <Link href={academy.slug}>
-                    <a>
+              <Link href={academy.slug} key={academy.slug}>
+                <a>
+                  <Card className="grid h-full grid-cols-1 grid-rows-[auto,1fr] gap-y-4 rounded-xl xl:rounded-2xl">
+                    <div
+                      style={{ backgroundColor: academy.theme }}
+                      className="grid h-44 place-content-center rounded-xl"
+                    >
+                      <Img
+                        src={academy.preview}
+                        alt={academy.title}
+                        className=" aspect-square h-20"
+                      />
+                    </div>
+                    <div className="flex flex-col">
                       <h2 className="mb-2 text-lg font-bold text-primary lg:text-xl">
                         {academy.title} ACADEMY
                       </h2>
-                    </a>
-                  </Link>
 
-                  <div>
-                    <Stats moduleLength={32} estimatedTime={10} />
-
-                    <Paragraph size="small">{academy.description}</Paragraph>
-                  </div>
-                </div>
-              </Card>
+                      <div>
+                        <Stats
+                          moduleLength={academy.length}
+                          lastUpdate={'Daily update'}
+                        />
+                        <hr className="my-4 border-gray-light" />
+                        <Paragraph>{academy.description}</Paragraph>
+                      </div>
+                    </div>
+                  </Card>
+                </a>
+              </Link>
             ))}
           </div>
         </Container>
@@ -88,17 +81,23 @@ const Academy: NextPage<Props> = ({ title, description, academyList }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const base = 'contents/academy';
+  const basePath = 'contents/academy';
 
-  const main = await readFile(path.join(base, 'index.md'));
-  const academyList = await readDir(base, {
+  const main = await readFile(path.join(basePath, 'index.md'));
+  const academyList = await readDir(basePath, {
     exclude: 'index.md',
   });
 
-  const academyListFilePromise = academyList.map(async (academy) => {
-    const file = await readFile(path.join(base, academy, 'index.md'));
-    return matter(file).data;
-  });
+  const academyListFilePromise = academyList.map(
+    async (academy): Promise<MatterMeta> => {
+      const file = await readFile(path.join(basePath, academy, 'index.md'));
+      const modules = await readDir(path.join(basePath, academy), {
+        exclude: 'index.md',
+      });
+      const matterResult = matter(file).data;
+      return { ...matterResult, length: modules.length } as MatterMeta;
+    }
+  );
 
   const academyListData = await Promise.all(academyListFilePromise);
 
