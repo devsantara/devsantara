@@ -16,13 +16,12 @@ import { Container } from '@/components/Container';
 import { Footer } from '@/components/Footer';
 import { Img } from '@/components/Img';
 import { Stats } from '@/components/Stats';
+import { ModuleList } from '@/components/ModuleList';
+import { MatterMeta } from '@/types';
+import moment from 'moment';
 
-interface Props {
-  title: string;
-  description: string;
-  preview: string;
-  theme: string;
-  academyModules: Props[];
+interface Props extends MatterMeta {
+  academyModules: MatterMeta[];
 }
 
 const AcademyModule: NextPage<Props> = ({
@@ -31,6 +30,7 @@ const AcademyModule: NextPage<Props> = ({
   preview,
   theme,
   academyModules,
+  length,
 }) => {
   return (
     <Screen>
@@ -51,18 +51,25 @@ const AcademyModule: NextPage<Props> = ({
           </Paragraph>
         </div>
         <div>
-          <Stats estimatedTime={10} moduleLength={32} />
+          <Stats
+            lastUpdate={moment(academyModules[0]?.lastmod).fromNow()}
+            moduleLength={academyModules.length}
+          />
         </div>
       </Header>
 
       <Main>
         <Container>
           <ul>
-            {academyModules.map((module, index) => {
+            {academyModules.map((module) => {
               return (
-                <li key={module.title}>
-                  #{index + 1} | {module.title}
-                </li>
+                <ModuleList
+                  key={module.order}
+                  title={module.title}
+                  order={module.order}
+                  lastUpdate={module.lastmod}
+                  slug={module.slug}
+                />
               );
             })}
           </ul>
