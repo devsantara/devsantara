@@ -63,29 +63,31 @@ const Home: NextPage = () => {
         <Container>
           <div className="relative grid grid-cols-1 gap-x-5 gap-y-3 xl:mt-16 xl:grid-cols-3">
             {features.map((feature, index) => (
-              <Card
-                key={feature.id}
-                className={clsx(
-                  'px-5 py-7 text-center sm:px-20 lg:px-60 xl:p-9',
-                  {
-                    'relative -order-1 xl:-top-16 xl:order-none': index === 1,
-                  }
-                )}
-              >
-                <Img
-                  src={feature.image}
-                  alt="communities"
-                  className="mx-auto mb-2 h-8 w-8 lg:h-12 lg:w-12"
-                />
-                <Link href={feature.url}>
-                  <a>
+              <Link href={feature.url} key={feature.id}>
+                <a>
+                  <Card
+                    className={clsx(
+                      'rounded-xl px-5 py-7 text-center sm:px-20 lg:px-60 xl:rounded-3xl xl:p-9',
+                      {
+                        'relative -order-1 xl:-top-16 xl:order-none':
+                          index === 1,
+                      }
+                    )}
+                  >
+                    <Img
+                      src={feature.image}
+                      alt="communities"
+                      className="mx-auto mb-2 h-8 w-8 lg:h-12 lg:w-12"
+                    />
+
                     <h2 className="mb-2 text-lg font-medium text-primary lg:text-xl">
                       {feature.title}
                     </h2>
-                  </a>
-                </Link>
-                <Paragraph>{feature.description}</Paragraph>
-              </Card>
+
+                    <Paragraph>{feature.description}</Paragraph>
+                  </Card>
+                </a>
+              </Link>
             ))}
           </div>
         </Container>
