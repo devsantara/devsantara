@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import clsx from 'clsx';
 
@@ -15,6 +16,8 @@ const navigationRoutes = [
 ];
 
 const Navigation: FC<Props> = ({ isOpen, isStatic }) => {
+  const { pathname } = useRouter();
+
   return (
     <ul
       className={clsx(
@@ -25,7 +28,15 @@ const Navigation: FC<Props> = ({ isOpen, isStatic }) => {
       {navigationRoutes.map(({ id, name, url }) => (
         <li key={id}>
           <Link href={url}>
-            <a className="flex h-full items-center border-b border-secondary p-4 lg:border-0 lg:p-0">
+            <a
+              className={clsx(
+                'flex h-full items-center border-b border-secondary p-4 lg:border-0 lg:p-0',
+                {
+                  'font-semibold text-primary':
+                    pathname.startsWith(url) && !isStatic,
+                }
+              )}
+            >
               {name}
             </a>
           </Link>
