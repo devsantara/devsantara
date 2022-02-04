@@ -12,10 +12,10 @@ const Paragraph: FC<Props> = ({ className, children, size = 'normal' }) => {
   return (
     <p
       className={clsx(
-        'leading-relaxed text-gray-dark lg:text-md',
+        'leading-relaxed text-gray-dark',
         {
-          'text-xs': size === 'small',
-          'text-sm': size === 'normal',
+          'text-xs lg:text-sm': size === 'small',
+          'text-sm lg:text-md': size === 'normal',
         },
         className
       )}
