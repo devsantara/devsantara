@@ -30,11 +30,10 @@ const AcademyModule: NextPage<Props> = ({
   preview,
   theme,
   academyModules,
-  length,
 }) => {
   const lastUpdate = academyModules.sort((a: MatterMeta, b: MatterMeta) => {
     return moment(b.lastmod).unix() - moment(a.date).unix();
-  })[0].lastmod;
+  })[0]?.lastmod;
 
   return (
     <Screen>
