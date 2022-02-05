@@ -14,7 +14,7 @@ export const Default = Template.bind({});
 Default.args = {
   // href: '',
   className: 'bg-primary text-white text-left',
-  isRounded: false,
+  rounded: false,
   // target: '_self',
   onClick: () => {},
 };
