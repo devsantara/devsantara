@@ -30,7 +30,7 @@ const Navigation: FC<Props> = ({ isOpen, isStatic }) => {
           <Link href={url}>
             <a
               className={clsx(
-                'flex h-full items-center border-b border-secondary p-4 lg:border-0 lg:p-0',
+                'flex h-full items-center border-b border-secondary p-4 underline-offset-4 hover:underline lg:border-0 lg:p-0',
                 {
                   'font-semibold text-primary':
                     pathname.startsWith(url) && !isStatic,
