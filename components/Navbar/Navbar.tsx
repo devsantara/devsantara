@@ -53,15 +53,17 @@ const Navbar: FC<Props> = () => {
           <Button
             href={discordInviteLink}
             target="_blank"
-            className="h-full w-14 whitespace-nowrap bg-primary text-xs font-semibold text-white hover:brightness-110 md:w-auto md:px-8"
+            className="w-14 whitespace-nowrap bg-primary text-xs font-semibold text-white hover:brightness-110 md:w-auto md:px-8"
             iconEnd={<SiDiscord />}
+            fullHeight
           >
             <span className="hidden md:inline">JOIN DISCORD</span>
           </Button>
           <Button
-            className="h-full w-14 lg:hidden"
+            className="w-14 lg:hidden"
             iconStart={isOpen ? <GrClose /> : <GrMenu />}
             onClick={handleOnClickMenu}
+            fullHeight
           />
         </div>
       </Container>
