@@ -49,7 +49,7 @@ const SideBar: FC<Props> = ({
               <a
                 title={module.title}
                 className={clsx(
-                  'mb-1 block truncate py-4 text-sm underline-offset-2 hover:bg-secondary lg:text-md',
+                  'block truncate py-4 text-sm underline-offset-2 hover:bg-secondary/40 lg:text-md',
                   {
                     'text-primary': asPath === module.slug,
                   }
