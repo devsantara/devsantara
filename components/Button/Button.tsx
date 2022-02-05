@@ -12,8 +12,10 @@ interface Props {
   iconStart?: any;
   iconEnd?: any;
   className?: string;
-  isRounded?: boolean;
+  rounded?: boolean;
   iconSize?: IconSizes;
+  fullHeight?: boolean;
+  title?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -24,11 +26,16 @@ const Button: FC<Props> = ({
   className,
   iconStart,
   iconEnd,
-  isRounded,
+  rounded,
   iconSize = 'medium',
+  fullHeight,
+  title,
   onClick,
 }) => {
-  const classes = clsx('flex h-11 w-full items-center justify-center gap-x-2');
+  const classes = clsx('flex w-full items-center justify-center gap-x-2', {
+    'h-full': fullHeight,
+    'h-11': !fullHeight,
+  });
 
   const iconClasses = clsx({
     'text-xl': iconSize === 'medium',
@@ -48,8 +55,9 @@ const Button: FC<Props> = ({
     return (
       <Link href={href}>
         <a
-          className={clsx(classes, { 'rounded-lg': isRounded }, className)}
+          className={clsx(classes, { 'rounded-lg': rounded }, className)}
           target={target}
+          title={title}
         >
           {ChildrenComponents}
         </a>
@@ -59,7 +67,7 @@ const Button: FC<Props> = ({
 
   return (
     <button
-      className={clsx(classes, { 'rounded-lg': isRounded }, className)}
+      className={clsx(classes, { 'rounded-lg': rounded }, className)}
       onClick={onClick}
     >
       {ChildrenComponents}

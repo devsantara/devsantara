@@ -3,29 +3,24 @@ import { Paragraph } from '@/components/Paragraph';
 import { Title } from '@/components/Title';
 import { Container } from '@/components/Container';
 import { Children } from '@/types';
+import clsx from 'clsx';
 
-interface Props {}
+interface Props {
+  children: Children;
+  className?: string;
+}
 
-const Highlight: FC<{ children: Children }> = ({ children }) => (
-  <span className="text-primary">{children}</span>
-);
-
-const Header: FC<Props> = () => {
+const Header: FC<Props> = ({ children, className }) => {
   return (
     <header>
       <Container>
-        <div className="flex flex-col items-center gap-y-4 py-16 text-left md:text-center lg:gap-y-5 xl:pt-20 xl:pb-14 xl:text-center">
-          <Title className="max-w-4xl">
-            TEMPAT <Highlight>BELAJAR</Highlight> DAN{' '}
-            <Highlight>BERKOMUNITAS</Highlight> BAGI{' '}
-            <Highlight>
-              DEVELOPER <u>INDONESIA</u>
-            </Highlight>
-          </Title>
-          <Paragraph className="md:max-w-lg lg:max-w-2xl">
-            Pelajari keterampilan yang sangat dibutuhkan, dan berjumpa dengan
-            teman hingga mentor yang berpengalaman di bidangnya
-          </Paragraph>
+        <div
+          className={clsx(
+            'flex flex-col gap-y-4 py-16 text-left sm:items-center sm:text-center lg:gap-y-5 xl:pt-20 xl:pb-14',
+            className
+          )}
+        >
+          {children}
         </div>
       </Container>
     </header>

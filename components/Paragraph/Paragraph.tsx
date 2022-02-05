@@ -5,11 +5,21 @@ import { FC } from 'react';
 interface Props {
   children: Children;
   className?: string;
+  size?: 'small' | 'normal';
 }
 
-const Paragraph: FC<Props> = ({ className, children }) => {
+const Paragraph: FC<Props> = ({ className, children, size = 'normal' }) => {
   return (
-    <p className={clsx('text-sm text-gray-dark lg:text-md', className)}>
+    <p
+      className={clsx(
+        'leading-relaxed text-gray-dark',
+        {
+          'text-xs lg:text-sm': size === 'small',
+          'text-sm lg:text-md': size === 'normal',
+        },
+        className
+      )}
+    >
       {children}
     </p>
   );

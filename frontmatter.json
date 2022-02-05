@@ -1,0 +1,27 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "academy",
+      "path": "[[workspace]]/contents/academy/"
+    },
+    {
+      "title": "academy -> html",
+      "path": "[[workspace]]/contents/academy/html"
+    },
+    {
+      "title": "academy -> css",
+      "path": "[[workspace]]/contents/academy/css"
+    },
+    {
+      "title": "resourses",
+      "path": "[[workspace]]/contents/resourses"
+    },
+    {
+      "title": "communities",
+      "path": "[[workspace]]/contents/communities"
+    }
+  ],
+  "frontMatter.templates.prefix": "",
+  "frontMatter.content.publicFolder": "public"
+}

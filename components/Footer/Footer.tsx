@@ -29,7 +29,7 @@ const Footer: FC<Props> = () => {
         </div>
         <div className="flex flex-col justify-between text-center lg:flex-row">
           <Navigation isOpen isStatic />
-          <Paragraph className="mt-6 lg:mt-0">
+          <Paragraph className="mt-6 lg:mt-0" size="small">
             © {years} Devsantara. All rights reserved
           </Paragraph>
         </div>

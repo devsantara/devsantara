@@ -14,6 +14,13 @@ module.exports = {
       fontSize: {
         md: ['1rem', { lineHeight: '1.6rem' }],
       },
+      typography: {
+        DEFAULT: {
+          img: {
+            width: '100%',
+          },
+        },
+      },
     },
     colors: {
       transparent: 'transparent',
@@ -29,5 +36,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
