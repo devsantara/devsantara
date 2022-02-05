@@ -14,4 +14,5 @@ export interface MatterMeta {
   theme: string;
   title: string;
   length?: number;
+  content?: string;
 }
