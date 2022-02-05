@@ -21,8 +21,12 @@ const Navigation: FC<Props> = ({ isOpen, isStatic }) => {
   return (
     <ul
       className={clsx(
-        'top-[57px] left-0 right-0 bottom-0 z-50 gap-x-8 pt-2 text-sm lg:static lg:flex lg:h-auto lg:p-0',
-        { hidden: !isOpen, 'bg-white': isOpen, 'fixed h-screen': !isStatic }
+        'top-[57px] left-0 right-0 bottom-0 gap-x-8 pt-2 text-sm lg:static lg:flex lg:h-auto lg:p-0',
+        {
+          hidden: !isOpen,
+          'bg-white': isOpen,
+          'fixed z-50 h-screen': !isStatic,
+        }
       )}
     >
       {navigationRoutes.map(({ id, name, url }) => (
