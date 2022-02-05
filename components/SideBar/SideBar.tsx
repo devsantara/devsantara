@@ -41,16 +41,15 @@ const SideBar: FC<Props> = ({
           </div>
         </a>
       </Link>
-      <hr className="my-4 border-gray-light" />
 
-      <ul>
+      <ul className="mt-4 divide-y divide-gray-light">
         {academyModules.map((module) => (
           <li key={module.order}>
             <Link href={module.slug}>
               <a
                 title={module.title}
                 className={clsx(
-                  'mb-1 block truncate py-1  text-sm underline-offset-2 hover:underline lg:text-md',
+                  'mb-1 block truncate py-4 text-sm underline-offset-2 hover:bg-secondary lg:text-md',
                   {
                     'text-primary': asPath === module.slug,
                   }
