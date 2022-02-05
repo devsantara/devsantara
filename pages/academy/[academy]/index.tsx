@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticPropsContext, NextPage } from 'next';
 import path from 'path';
 import matter from 'gray-matter';
+import moment from 'moment';
 
 import { readDir, readFile } from '@/utils';
 
@@ -18,7 +19,6 @@ import { Img } from '@/components/Img';
 import { Stats } from '@/components/Stats';
 import { ModuleList } from '@/components/ModuleList';
 import { MatterMeta } from '@/types';
-import moment from 'moment';
 
 interface Props extends MatterMeta {
   academyModules: MatterMeta[];
@@ -32,6 +32,10 @@ const AcademyModule: NextPage<Props> = ({
   academyModules,
   length,
 }) => {
+  const lastUpdate = academyModules.sort((a: MatterMeta, b: MatterMeta) => {
+    return moment(b.lastmod).unix() - moment(a.date).unix();
+  })[0].lastmod;
+
   return (
     <Screen>
       <Navbar />
@@ -52,7 +56,7 @@ const AcademyModule: NextPage<Props> = ({
         </div>
         <div>
           <Stats
-            lastUpdate={moment(academyModules[0]?.lastmod).fromNow()}
+            lastUpdate={moment(lastUpdate).fromNow()}
             moduleLength={academyModules.length}
           />
         </div>
@@ -60,18 +64,20 @@ const AcademyModule: NextPage<Props> = ({
 
       <Main>
         <Container>
-          <ul>
-            {academyModules.map((module) => {
-              return (
-                <ModuleList
-                  key={module.order}
-                  title={module.title}
-                  order={module.order}
-                  lastUpdate={module.lastmod}
-                  slug={module.slug}
-                />
-              );
-            })}
+          <ul className="flex flex-col gap-y-3">
+            {academyModules
+              .sort((a, b) => a.order - b.order)
+              .map((module) => {
+                return (
+                  <ModuleList
+                    key={module.order}
+                    title={module.title}
+                    order={module.order}
+                    lastUpdate={module.lastmod}
+                    slug={module.slug}
+                  />
+                );
+              })}
           </ul>
         </Container>
       </Main>
@@ -106,10 +112,12 @@ export const getStaticProps = async ({ params }: Context) => {
 
   const academyModules = await Promise.all(academyModulesPromise);
 
+  // const sortedAcademyModules = academyModules.sort((a, b) => a.order - b.order);
+
   return {
     props: {
       ...matterMeta,
-      academyModules: academyModules.sort((a, b) => a.order - b.order),
+      academyModules,
     },
   };
 };
