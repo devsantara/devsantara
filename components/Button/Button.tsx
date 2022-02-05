@@ -15,6 +15,7 @@ interface Props {
   rounded?: boolean;
   iconSize?: IconSizes;
   fullHeight?: boolean;
+  title?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -28,6 +29,7 @@ const Button: FC<Props> = ({
   rounded,
   iconSize = 'medium',
   fullHeight,
+  title,
   onClick,
 }) => {
   const classes = clsx('flex w-full items-center justify-center gap-x-2', {
@@ -55,6 +57,7 @@ const Button: FC<Props> = ({
         <a
           className={clsx(classes, { 'rounded-lg': rounded }, className)}
           target={target}
+          title={title}
         >
           {ChildrenComponents}
         </a>
