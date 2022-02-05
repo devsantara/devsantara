@@ -3,6 +3,8 @@ import matter from 'gray-matter';
 import path from 'path';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
+import clsx from 'clsx';
+import { BsGithub } from 'react-icons/bs';
 
 import { MatterMeta } from '@/types';
 import { readDir, readFile } from '@/utils';
@@ -15,6 +17,8 @@ import { Main } from '@/components/Main';
 import { Container } from '@/components/Container';
 import { SideBar } from '@/components/SideBar';
 import { Content } from '@/components/Content';
+import { Button } from '@/components/Button';
+import { contributeBaseLink } from '@/constants';
 
 interface Props extends MatterMeta {
   academyModules: MatterMeta[];
@@ -29,21 +33,59 @@ const Module: NextPage<Props> = ({
   slug,
 }) => {
   const academySlug = slug.split('/').slice(0, -1).join('/');
+  const currentIndex = academyModules.findIndex(
+    (module) => module.slug === slug
+  );
+  const prevModule = academyModules[currentIndex - 1];
+  const nextModule = academyModules[currentIndex + 1];
+
+  const buttonClasses = clsx('px-10 border md:w-fit text-sm rounded-md mb-2');
 
   return (
     <Screen>
       <Navbar />
       <Main>
         <Container>
-          <div className="mt-16 grid grid-cols-1 gap-x-5 xl:grid-cols-[280px,1fr]">
+          <div className="mt-16 grid grid-cols-1 gap-x-8 xl:grid-cols-[250px,1fr]">
             <SideBar
               theme={theme}
               preview={preview}
               academyModules={academyModules}
               academySlug={academySlug}
-              className="sticky top-20 hidden h-fit xl:block"
+              className="sticky top-24 hidden h-fit xl:block"
             />
-            <Content title={title} content={content} />
+            <div>
+              <Content title={title} content={content} />
+              <div className="mt-8 flex flex-col md:flex-row md:justify-between">
+                <Button
+                  className={clsx(buttonClasses, 'bg-black text-white')}
+                  iconStart={<BsGithub />}
+                  href={`${contributeBaseLink}/contents${slug}.md`}
+                >
+                  Contribute
+                </Button>
+                <div className="flex flex-col gap-x-6 md:flex-row">
+                  {prevModule && (
+                    <Button
+                      className={clsx(buttonClasses, 'border-primary')}
+                      href={prevModule.slug}
+                      title={prevModule.title}
+                    >
+                      Sebelumnya
+                    </Button>
+                  )}
+                  {nextModule && (
+                    <Button
+                      className={clsx(buttonClasses, 'bg-primary text-white')}
+                      href={nextModule.slug}
+                      title={nextModule.title}
+                    >
+                      Selanjutnya
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </Main>
