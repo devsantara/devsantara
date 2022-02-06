@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import Link from 'next/link';
 import { Img } from './Img';
 
 describe('Img component', () => {

@@ -9,7 +9,9 @@ interface Props {
 
 const Container: FC<Props> = ({ children, className }) => {
   return (
-    <div className={clsx('container mx-auto px-4', className)}>{children}</div>
+    <div className={clsx('container mx-auto px-3 lg:px-4', className)}>
+      {children}
+    </div>
   );
 };
 

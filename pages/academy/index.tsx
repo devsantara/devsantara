@@ -1,9 +1,10 @@
 import { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
-import matter from 'gray-matter';
 import path from 'path';
 
-import { readDir, readFile } from '@/utils';
+import { getContentData, readDir } from '@/utils';
+import { MatterResult } from '@/types';
+import { academyBasePath } from '@/constants';
 
 // components
 import { Card } from '@/components/Card';
@@ -18,13 +19,17 @@ import { Paragraph } from '@/components/Paragraph';
 import { Screen } from '@/components/Screen';
 import { Title } from '@/components/Title';
 import { Stats } from '@/components/Stats';
-import { MatterMeta } from '@/types';
+import moment from 'moment';
 
-interface Props extends MatterMeta {
-  academyList: MatterMeta[];
+interface MatterResultWithModuleLength extends MatterResult {
+  moduleLength: number;
 }
 
-const Academy: NextPage<Props> = ({ title, description, academyList }) => {
+interface Props extends MatterResult {
+  academies: MatterResultWithModuleLength[];
+}
+
+const Academy: NextPage<Props> = ({ title, description, academies }) => {
   const splitTitle = title.split(' ');
 
   return (
@@ -39,8 +44,8 @@ const Academy: NextPage<Props> = ({ title, description, academyList }) => {
 
       <Main>
         <Container>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {academyList.map((academy) => (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            {academies.map((academy) => (
               <Link href={academy.slug} key={academy.slug}>
                 <a>
                   <Card className="grid h-full grid-cols-1 grid-rows-[auto,1fr] gap-y-4 rounded-xl xl:rounded-2xl">
@@ -51,7 +56,7 @@ const Academy: NextPage<Props> = ({ title, description, academyList }) => {
                       <Img
                         src={academy.preview}
                         alt={academy.title}
-                        className=" aspect-square h-20"
+                        className="aspect-square h-20"
                       />
                     </div>
                     <div className="flex flex-col">
@@ -61,8 +66,10 @@ const Academy: NextPage<Props> = ({ title, description, academyList }) => {
 
                       <div>
                         <Stats
-                          moduleLength={academy.length}
-                          lastUpdate={'Daily update'}
+                          moduleLength={academy.moduleLength}
+                          lastUpdate={moment(academy.lastmod).format(
+                            'D MMM YYYY'
+                          )}
                         />
                         <hr className="my-4 border-gray-light" />
                         <Paragraph>{academy.description}</Paragraph>
@@ -81,32 +88,35 @@ const Academy: NextPage<Props> = ({ title, description, academyList }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const basePath = 'contents/academy';
-
-  const main = await readFile(path.join(basePath, 'index.md'));
-  const academyList = await readDir(basePath, {
-    exclude: 'index.md',
-  });
-
-  const academyListFilePromise = academyList.map(
-    async (academy): Promise<MatterMeta> => {
-      const file = await readFile(path.join(basePath, academy, 'index.md'));
-      const modules = await readDir(path.join(basePath, academy), {
-        exclude: 'index.md',
-      });
-      const matterResult = matter(file).data;
-      return { ...matterResult, length: modules.length } as MatterMeta;
-    }
+  const academyFeature = await getContentData(
+    path.join(academyBasePath, 'index.md')
   );
 
-  const academyListData = await Promise.all(academyListFilePromise);
+  const academies = await readDir(academyBasePath, { exclude: 'index.md' });
 
-  const matterMeta = matter(main).data;
+  const academiesContent = await Promise.all(
+    academies.map(async (academyDirName) => {
+      const academyData = await getContentData(
+        path.join(academyBasePath, academyDirName, 'index.md')
+      );
+
+      const academyModules = await readDir(
+        path.join(academyBasePath, academyDirName),
+        { exclude: 'index.md' }
+      );
+
+      return { ...academyData, moduleLength: academyModules.length };
+    })
+  );
+
+  const ascAcademiesContent = academiesContent.sort(
+    (a, b) => a.order - b.order
+  );
 
   return {
     props: {
-      ...matterMeta,
-      academyList: academyListData.sort((a, b) => a.order - b.order),
+      ...academyFeature,
+      academies: ascAcademiesContent,
     },
   };
 };

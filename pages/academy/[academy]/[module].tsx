@@ -1,13 +1,13 @@
 import { GetStaticPropsContext, NextPage } from 'next';
-import matter from 'gray-matter';
 import path from 'path';
-import MarkdownIt from 'markdown-it';
-import hljs from 'highlight.js';
 import clsx from 'clsx';
 import { BsGithub } from 'react-icons/bs';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-import { MatterMeta } from '@/types';
-import { readDir, readFile } from '@/utils';
+import { MatterResult } from '@/types';
+import { getContentData, readDir } from '@/utils';
+import { academyBasePath, contributeBaseLink } from '@/constants';
+import { markdown } from '@/libs';
 
 // components
 import { Screen } from '@/components/Screen';
@@ -18,14 +18,12 @@ import { Container } from '@/components/Container';
 import { SideBar } from '@/components/SideBar';
 import { Content } from '@/components/Content';
 import { Button } from '@/components/Button';
-import { contributeBaseLink } from '@/constants';
 
-interface Props extends MatterMeta {
-  academyModules: MatterMeta[];
+interface Props extends MatterResult {
+  academyModules: MatterResult[];
 }
 
 const Module: NextPage<Props> = ({
-  title,
   theme,
   preview,
   academyModules,
@@ -46,7 +44,7 @@ const Module: NextPage<Props> = ({
       <Navbar />
       <Main>
         <Container>
-          <div className="mt-16 grid grid-cols-1 gap-x-8 xl:grid-cols-[250px,1fr]">
+          <div className="mt-8 grid grid-cols-1 gap-x-6 lg:mt-12 xl:grid-cols-[252px,1fr]">
             <SideBar
               theme={theme}
               preview={preview}
@@ -55,32 +53,51 @@ const Module: NextPage<Props> = ({
               className="sticky top-24 hidden h-fit xl:block"
             />
             <div>
-              <Content title={title} content={content} />
+              <Content content={content} />
               <div className="mt-8 flex flex-col md:flex-row md:justify-between">
                 <Button
                   className={clsx(buttonClasses, 'bg-black text-white')}
                   iconStart={<BsGithub />}
+                  target="_blank"
                   href={`${contributeBaseLink}/contents${slug}.md`}
                 >
                   Contribute
                 </Button>
-                <div className="flex flex-col gap-x-6 md:flex-row">
-                  {prevModule && (
+                <div className="flex flex-col gap-x-4 md:flex-row">
+                  {prevModule ? (
                     <Button
                       className={clsx(buttonClasses, 'border-primary')}
                       href={prevModule.slug}
                       title={prevModule.title}
+                      iconStart={<IoIosArrowBack />}
                     >
                       Sebelumnya
                     </Button>
+                  ) : (
+                    <Button
+                      className={clsx(buttonClasses, 'border-primary')}
+                      href={academySlug}
+                      iconStart={<IoIosArrowBack />}
+                    >
+                      Kembali ke Academy
+                    </Button>
                   )}
-                  {nextModule && (
+                  {nextModule ? (
                     <Button
                       className={clsx(buttonClasses, 'bg-primary text-white')}
                       href={nextModule.slug}
                       title={nextModule.title}
+                      iconEnd={<IoIosArrowForward />}
                     >
                       Selanjutnya
+                    </Button>
+                  ) : (
+                    <Button
+                      className={clsx(buttonClasses, 'bg-primary text-white')}
+                      href={academySlug}
+                      iconEnd={<IoIosArrowForward />}
+                    >
+                      Kembali ke Academy
                     </Button>
                   )}
                 </div>
@@ -103,44 +120,32 @@ interface Context extends GetStaticPropsContext {
 
 export const getStaticProps = async ({ params }: Context) => {
   const { academy, module } = params;
-  const basePath = 'contents/academy';
 
-  const moduleFile = await readFile(
-    path.join(basePath, academy, `${module}.md`)
+  const moduleContent = await getContentData(
+    path.join(academyBasePath, academy, `${module}.md`)
   );
 
-  const academyModulesFile = await readDir(path.join(basePath, academy), {
+  const academyModules = await readDir(path.join(academyBasePath, academy), {
     exclude: 'index.md',
   });
 
-  const academyModulesPromises = academyModulesFile.map(async (module) => {
-    const file = await readFile(path.join(basePath, academy, module));
-    return matter(file).data;
-  });
+  const academyModulesContent = await Promise.all(
+    academyModules.map(async (moduleFileName) => {
+      return getContentData(
+        path.join(academyBasePath, academy, moduleFileName)
+      );
+    })
+  );
 
-  const academyModules = await Promise.all(academyModulesPromises);
-
-  const matterResult = matter(moduleFile);
-  const matterMeta = matterResult.data;
-  const matterContent = matterResult.content;
-
-  const md = new MarkdownIt({
-    highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return hljs.highlight(str, { language: lang }).value;
-        } catch (__) {}
-      }
-
-      return '';
-    },
-  });
+  const ascAcademyModules = academyModulesContent.sort(
+    (a, b) => a.order - b.order
+  );
 
   return {
     props: {
-      ...matterMeta,
-      content: md.render(matterContent),
-      academyModules,
+      ...moduleContent,
+      content: markdown.render(moduleContent.content),
+      academyModules: ascAcademyModules,
     },
   };
 };

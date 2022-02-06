@@ -1,12 +1,15 @@
 import { FC, useEffect, useState } from 'react';
-import { Button } from '../Button';
-import { Container } from '../Container';
-import { Img } from '../Img';
 import { SiDiscord } from 'react-icons/si';
 import { GrClose, GrMenu } from 'react-icons/gr';
-import { Navigation } from '../Navigation';
 import clsx from 'clsx';
+
 import { discordInviteLink } from '@/constants';
+
+// components
+import { Button } from '@/components/Button';
+import { Container } from '@/components/Container';
+import { Img } from '@/components/Img';
+import { Navigation } from '@/components/Navigation';
 
 interface Props {}
 
@@ -49,15 +52,14 @@ const Navbar: FC<Props> = () => {
           <Navigation isOpen={isOpen} />
         </div>
 
-        <div className="flex h-full">
+        <div className="flex h-full items-center">
           <Button
             href={discordInviteLink}
             target="_blank"
-            className="w-14 whitespace-nowrap bg-primary text-xs font-semibold text-white hover:brightness-110 md:w-auto md:px-8"
+            className="mr-2 h-11 w-14 whitespace-nowrap rounded-md bg-primary text-xs font-semibold text-white hover:brightness-110 md:w-auto md:px-8 lg:mr-0 lg:h-12"
             iconEnd={<SiDiscord />}
-            fullHeight
           >
-            <span className="hidden md:inline">JOIN DISCORD</span>
+            <span className="hidden lg:inline">JOIN DISCORD</span>
           </Button>
           <Button
             className="w-14 lg:hidden"

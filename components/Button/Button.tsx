@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
 import { Children, LinkTarget } from '@/types';
 import Link from 'next/link';
 import clsx from 'clsx';
@@ -16,7 +16,7 @@ interface Props {
   iconSize?: IconSizes;
   fullHeight?: boolean;
   title?: string;
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: () => void;
 }
 
 const Button: FC<Props> = ({
@@ -34,7 +34,7 @@ const Button: FC<Props> = ({
 }) => {
   const classes = clsx('flex w-full items-center justify-center gap-x-2', {
     'h-full': fullHeight,
-    'h-11': !fullHeight,
+    'h-12': !fullHeight,
   });
 
   const iconClasses = clsx({

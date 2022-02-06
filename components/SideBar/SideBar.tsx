@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
-import { MatterMeta } from '@/types';
+import { MatterResult } from '@/types';
 
 // components
 import { Img } from '@/components/Img';
@@ -13,7 +13,7 @@ interface Props {
   preview: string;
   className?: string;
   academySlug: string;
-  academyModules: MatterMeta[];
+  academyModules: MatterResult[];
 }
 
 const SideBar: FC<Props> = ({
@@ -42,14 +42,14 @@ const SideBar: FC<Props> = ({
         </a>
       </Link>
 
-      <ul className="mt-4 divide-y divide-gray-light">
+      <ul className="mt-4 h-[70vh] divide-y divide-gray-light overflow-auto pr-2">
         {academyModules.map((module) => (
           <li key={module.order}>
             <Link href={module.slug}>
               <a
                 title={module.title}
                 className={clsx(
-                  'mb-1 block truncate py-4 text-sm underline-offset-2 hover:bg-secondary lg:text-md',
+                  'block truncate py-4 text-sm underline-offset-2 hover:bg-secondary/40 lg:text-md',
                   {
                     'text-primary': asPath === module.slug,
                   }

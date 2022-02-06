@@ -1,9 +1,10 @@
 import { GetStaticPaths, GetStaticPropsContext, NextPage } from 'next';
 import path from 'path';
-import matter from 'gray-matter';
 import moment from 'moment';
 
-import { readDir, readFile } from '@/utils';
+import { getContentData, readDir } from '@/utils';
+import { MatterResult } from '@/types';
+import { academyBasePath } from '@/constants';
 
 // components
 import { Screen } from '@/components/Screen';
@@ -18,10 +19,10 @@ import { Footer } from '@/components/Footer';
 import { Img } from '@/components/Img';
 import { Stats } from '@/components/Stats';
 import { ModuleList } from '@/components/ModuleList';
-import { MatterMeta } from '@/types';
 
-interface Props extends MatterMeta {
-  academyModules: MatterMeta[];
+interface Props extends MatterResult {
+  lastUpdate: string;
+  academyModules: MatterResult[];
 }
 
 const AcademyModule: NextPage<Props> = ({
@@ -30,15 +31,12 @@ const AcademyModule: NextPage<Props> = ({
   preview,
   theme,
   academyModules,
+  lastUpdate,
 }) => {
-  const lastUpdate = academyModules.sort((a: MatterMeta, b: MatterMeta) => {
-    return moment(b.lastmod).unix() - moment(a.date).unix();
-  })[0]?.lastmod;
-
   return (
     <Screen>
       <Navbar />
-      <Header className="grid grid-cols-1 gap-x-8 md:grid-cols-[auto,1fr,auto] xl:grid-cols-[auto,1fr,auto]">
+      <Header className="grid grid-cols-1 gap-x-8 pt-6 md:grid-cols-[auto,1fr,auto] xl:grid-cols-[auto,1fr,auto]">
         <div
           style={{ backgroundColor: theme }}
           className="flex justify-center rounded-lg p-7"
@@ -55,7 +53,7 @@ const AcademyModule: NextPage<Props> = ({
         </div>
         <div>
           <Stats
-            lastUpdate={moment(lastUpdate).fromNow()}
+            lastUpdate={lastUpdate ? moment(lastUpdate).fromNow() : '-'}
             moduleLength={academyModules.length}
           />
         </div>
@@ -64,19 +62,17 @@ const AcademyModule: NextPage<Props> = ({
       <Main>
         <Container>
           <ul className="flex flex-col gap-y-3">
-            {academyModules
-              .sort((a, b) => a.order - b.order)
-              .map((module) => {
-                return (
-                  <ModuleList
-                    key={module.order}
-                    title={module.title}
-                    order={module.order}
-                    lastUpdate={module.lastmod}
-                    slug={module.slug}
-                  />
-                );
-              })}
+            {academyModules.map((module) => {
+              return (
+                <ModuleList
+                  key={module.order}
+                  title={module.title}
+                  order={module.order}
+                  lastUpdate={module.lastmod}
+                  slug={module.slug}
+                />
+              );
+            })}
           </ul>
         </Container>
       </Main>
@@ -93,38 +89,41 @@ interface Context extends GetStaticPropsContext {
 
 export const getStaticProps = async ({ params }: Context) => {
   const { academy } = params;
-  const basePath = 'contents/academy';
 
-  const mainFile = await readFile(path.join(basePath, academy, 'index.md'));
+  const academyContent = await getContentData(
+    path.join(academyBasePath, academy, 'index.md')
+  );
 
-  const matterMeta = matter(mainFile).data;
-
-  const academyModulesRaw = await readDir(path.join(basePath, academy), {
+  const academyModules = await readDir(path.join(academyBasePath, academy), {
     exclude: 'index.md',
   });
 
-  const academyModulesPromise = academyModulesRaw.map(async (module) => {
-    const moduleFile = await readFile(path.join(basePath, academy, module));
+  const academyModulesContent = await Promise.all(
+    academyModules.map(async (module) => {
+      return getContentData(path.join(academyBasePath, academy, module));
+    })
+  );
 
-    return matter(moduleFile).data;
-  });
+  const lastUpdate =
+    academyModulesContent.sort((a: MatterResult, b: MatterResult) => {
+      return moment(b.lastmod).unix() - moment(a.lastmod).unix();
+    })[0]?.lastmod || null;
 
-  const academyModules = await Promise.all(academyModulesPromise);
-
-  // const sortedAcademyModules = academyModules.sort((a, b) => a.order - b.order);
+  const ascAcademyModules = academyModulesContent.sort(
+    (a, b) => a.order - b.order
+  );
 
   return {
     props: {
-      ...matterMeta,
-      academyModules,
+      ...academyContent,
+      lastUpdate,
+      academyModules: ascAcademyModules,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const basePath = 'contents/academy';
-
-  const academies = await readDir(basePath, {
+  const academies = await readDir(academyBasePath, {
     exclude: 'index.md',
   });
 
