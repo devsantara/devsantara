@@ -1,4 +1,4 @@
-import fs, { FlagAndOpenMode } from 'fs/promises';
+import fs from 'fs/promises';
 
 interface ReadDirOptions {
   exclude: string;
@@ -16,5 +16,5 @@ export const readDir = async (dirPath: string, options?: ReadDirOptions) => {
 };
 
 export const readFile = async (filePath: string) => {
-  return await fs.readFile(filePath, { encoding: 'utf-8' });
+  return fs.readFile(filePath, { encoding: 'utf-8' });
 };
