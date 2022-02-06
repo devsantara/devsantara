@@ -36,15 +36,11 @@ const Academy: NextPage<Props> = ({
   academies,
   keywords,
 }) => {
-  const splitTitle = title.split(' ');
+  const splitTitle = title.toUpperCase().split(' ');
 
   return (
     <>
-      <AppHead
-        title={splitTitle.slice(1).join(' ')}
-        description={description}
-        keywords={keywords}
-      />
+      <AppHead title={title} description={description} keywords={keywords} />
       <Screen>
         <Navbar />
         <Header>
