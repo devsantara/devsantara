@@ -2,6 +2,8 @@ import type { NextPage } from 'next';
 import clsx from 'clsx';
 import Link from 'next/link';
 
+import { features } from '@/constants';
+
 // components
 import { Navbar } from '@/components/Navbar';
 import { Header } from '@/components/Header';
@@ -14,33 +16,6 @@ import { Screen } from '@/components/Screen';
 import { Title } from '@/components/Title';
 import { Highlight } from '@/components/Highlight';
 import { Main } from '@/components/Main';
-
-const features = [
-  {
-    id: 1,
-    title: 'Devsantara Communities',
-    image: '/icons/feature-communities.svg',
-    description:
-      'Berjumpa dengan teman teman yang memiliki tujuan yang sama seperti kamu, bangun jaringan dengan mereka',
-    url: '/communities',
-  },
-  {
-    id: 2,
-    title: 'Devsantara Academy',
-    image: '/icons/feature-academy.svg',
-    description:
-      'Pelajari skill teknologi kamu dengan media text yang akan mempercepat skill kamu di banding media video.',
-    url: '/academy',
-  },
-  {
-    id: 3,
-    title: 'Devsantara Resourses',
-    image: '/icons/feature-resourses.svg',
-    description:
-      'Temukan sumber daya pembelajaran kamu di sini yang membantu kamu berkembang lebih cepat',
-    url: '/resourses',
-  },
-];
 
 const Home: NextPage = () => {
   return (
@@ -64,20 +39,16 @@ const Home: NextPage = () => {
           <div className="relative grid grid-cols-1 gap-x-5 gap-y-3 xl:mt-16 xl:grid-cols-3">
             {features.map((feature, index) => (
               <Link href={feature.url} key={feature.id}>
-                <a>
-                  <Card
-                    className={clsx(
-                      'rounded-xl px-5 py-7 text-center sm:px-20 lg:px-60 xl:rounded-3xl xl:p-9',
-                      {
-                        'relative -order-1 xl:-top-16 xl:order-none':
-                          index === 1,
-                      }
-                    )}
-                  >
+                <a
+                  className={clsx({
+                    'relative -order-1 xl:-top-16 xl:order-none': index === 1,
+                  })}
+                >
+                  <Card className="rounded-xl px-5 py-7 text-center sm:px-20 lg:px-60 xl:rounded-2xl xl:p-6">
                     <Img
                       src={feature.image}
                       alt="communities"
-                      className="mx-auto mb-2 h-8 w-8 lg:h-12 lg:w-12"
+                      className="mx-auto mb-2 h-8 w-8 lg:h-10 lg:w-10"
                     />
 
                     <h2 className="mb-2 text-lg font-medium text-primary lg:text-xl">
