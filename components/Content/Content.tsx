@@ -14,7 +14,7 @@ const Content: FC<Props> = ({ content }) => {
     <div className="rounded-lg border border-gray-light px-4 py-8 sm:px-8 lg:py-12">
       <div
         className={clsx(
-          'prose mx-auto max-w-[840px] font-openSans tracking-wide',
+          'prose mx-auto max-w-[840px] font-openSans tracking-wide prose-p:leading-loose',
           proseImg
         )}
       >

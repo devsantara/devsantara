@@ -45,7 +45,7 @@ const AcademyModule: NextPage<Props> = ({
         </div>
         <div className="flex flex-col gap-y-1">
           <Title className="max-w-4xl text-left">
-            {title} <Highlight>ACADEMY</Highlight>
+            {title} <Highlight>Academy</Highlight>
           </Title>
           <Paragraph className="max-w-lg text-left lg:max-w-lg">
             {description}
