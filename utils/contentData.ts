@@ -1,4 +1,3 @@
-/* eslint-disable  */
 import matter from 'gray-matter';
 
 import { MatterResult } from '@/types';
