@@ -21,10 +21,11 @@ describe('Button component', () => {
   });
 
   it('should execute event when event is trigger', () => {
-    const handleClick = jest.fn();
-    handleClick.mockImplementation(() => state++);
-
     let state = 0;
+    const handleClick = jest.fn();
+    handleClick.mockImplementation(() => {
+      state += 1;
+    });
 
     render(<Button onClick={handleClick}>Button</Button>);
 
