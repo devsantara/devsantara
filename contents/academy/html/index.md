@@ -1,15 +1,16 @@
 ---
 title: HTML
-order: 1
+order: 2
 slug: /academy/html
 description: Pelajari teknologi untuk membangun kerangka Tampilan/Front-End web menggunakan HTML 5
-date: '2022-02-04T11:41:58.172Z'
-lastmod: '2022-02-04T11:41:58.172Z'
+date: '2022-02-06T10:12:20.522Z'
+lastmod: '2022-02-06T10:13:07.411Z'
 draft: true
 theme: '#E44D26'
 preview: /images/academy/html/index.svg
 keywords:
-  - devsantara
-  - academy
+  - html
+  - html 5
+  - hypertext markup language
 ---
 
