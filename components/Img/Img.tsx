@@ -23,6 +23,7 @@ const Img: FC<Props> = ({ className, src, alt, href, target }) => {
       layout="fill"
       placeholder="blur"
       blurDataURL={src}
+      quality={30}
     />
   );
 
