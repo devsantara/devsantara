@@ -3,17 +3,12 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import clsx from 'clsx';
 
+import { navigation } from '@/constants';
+
 interface Props {
   isOpen?: boolean;
   isStatic?: boolean;
 }
-
-const navigationRoutes = [
-  { id: 1, name: 'Academy', url: '/academy' },
-  { id: 2, name: 'Resourses', url: '/resourses' },
-  { id: 3, name: 'Communities', url: '/communities' },
-  { id: 4, name: 'About', url: '/about' },
-];
 
 const Navigation: FC<Props> = ({ isOpen, isStatic }) => {
   const { pathname } = useRouter();
@@ -29,7 +24,7 @@ const Navigation: FC<Props> = ({ isOpen, isStatic }) => {
         }
       )}
     >
-      {navigationRoutes.map(({ id, name, url }) => (
+      {navigation.map(({ id, name, url }) => (
         <li key={id}>
           <Link href={url}>
             <a

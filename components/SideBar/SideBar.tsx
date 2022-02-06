@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 
-import { MatterMeta } from '@/types';
+import { MatterResult } from '@/types';
 
 // components
 import { Img } from '@/components/Img';
@@ -13,7 +13,7 @@ interface Props {
   preview: string;
   className?: string;
   academySlug: string;
-  academyModules: MatterMeta[];
+  academyModules: MatterResult[];
 }
 
 const SideBar: FC<Props> = ({
@@ -42,7 +42,7 @@ const SideBar: FC<Props> = ({
         </a>
       </Link>
 
-      <ul className="mt-4 divide-y divide-gray-light">
+      <ul className="mt-4 h-[70vh] divide-y divide-gray-light overflow-auto pr-2">
         {academyModules.map((module) => (
           <li key={module.order}>
             <Link href={module.slug}>

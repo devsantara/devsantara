@@ -5,7 +5,7 @@ interface Props {
   children: Children;
 }
 
-const Highlight: FC<{ children: Children }> = ({ children }) => (
+const Highlight: FC<Props> = ({ children }) => (
   <span className="text-primary">{children}</span>
 );
 
