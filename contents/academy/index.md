@@ -8,7 +8,7 @@ lastmod: '2022-02-06T06:09:12.858Z'
 draft: false
 preview: /images/brand.png
 keywords:
-  - devsantara
   - academy
+  - devsantara academy
 ---
 
