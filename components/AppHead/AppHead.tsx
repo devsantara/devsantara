@@ -24,7 +24,7 @@ const AppHead: FC<Props> = ({
   title = 'Devsantara | Developer Nusantara',
   keywords = defaultKeywords,
   description = 'Pelajari keterampilan yang sangat dibutuhkan di masa depan dan berkomunitas bersama Devsantara.',
-  preview = '/images/brand.png',
+  preview = 'https://firebasestorage.googleapis.com/v0/b/devsantara-994c0.appspot.com/o/devsantara%2Fbrand.png?alt=media',
   theme = '#4267C5',
 }) => {
   const keywordsString = [...defaultKeywords, ...keywords]?.join(', ');
