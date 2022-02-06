@@ -16,7 +16,15 @@ interface Props {
 const Img: FC<Props> = ({ className, src, alt, href, target }) => {
   const classes = clsx('block relative overflow-hidden', className);
 
-  const ImageComponent = <Image src={src} alt={alt} layout="fill" />;
+  const ImageComponent = (
+    <Image
+      src={src}
+      alt={alt}
+      layout="fill"
+      placeholder="blur"
+      blurDataURL={src}
+    />
+  );
 
   return href ? (
     <Link href={href}>
