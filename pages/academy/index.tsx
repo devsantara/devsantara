@@ -60,8 +60,8 @@ const Academy: NextPage<Props> = ({ title, description, academies }) => {
                       />
                     </div>
                     <div className="flex flex-col">
-                      <h2 className="mb-2 text-lg font-bold text-primary lg:text-xl">
-                        {academy.title} ACADEMY
+                      <h2 className="mb-2 text-lg font-bold tracking-wide text-primary lg:text-xl">
+                        {academy.title} Academy
                       </h2>
 
                       <div>
