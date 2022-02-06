@@ -1,5 +1,5 @@
 ---
-title: DEVSANTARA ACADEMY
+title: Devsantara Academy
 order: 0
 slug: /academy
 description: Pelajari skill teknologi kamu dengan media text yang akan mempercepat skill kamu di banding media video.

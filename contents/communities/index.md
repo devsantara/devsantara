@@ -1,5 +1,5 @@
 ---
-title: DEVSANTARA COMMUNITIES
+title: Devsantara Communities
 order: 0
 slug: /communities
 description: 'Berjumpa dengan teman teman yang memiliki tujuan yang sama seperti kamu, bangun jaringan dengan mereka'

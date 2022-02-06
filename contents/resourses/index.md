@@ -1,5 +1,5 @@
 ---
-title: DEVSANTARA RESOURSES
+title: Devsantara Resourses
 order: 0
 slug: /resourses
 description: Temukan sumber daya pembelajaran kamu di sini yang membantu kamu berkembang lebih cepat
