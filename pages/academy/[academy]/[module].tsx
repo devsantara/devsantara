@@ -18,6 +18,7 @@ import { Container } from '@/components/Container';
 import { SideBar } from '@/components/SideBar';
 import { Content } from '@/components/Content';
 import { Button } from '@/components/Button';
+import { AppHead } from '@/components/AppHead';
 
 interface Props extends MatterResult {
   academyModules: MatterResult[];
@@ -29,6 +30,9 @@ const Module: NextPage<Props> = ({
   academyModules,
   content,
   slug,
+  title,
+  description,
+  keywords,
 }) => {
   const academySlug = slug.split('/').slice(0, -1).join('/');
   const currentIndex = academyModules.findIndex(
@@ -40,74 +44,82 @@ const Module: NextPage<Props> = ({
   const buttonClasses = clsx('px-10 border md:w-fit text-sm rounded-md mb-2');
 
   return (
-    <Screen>
-      <Navbar />
-      <Main>
-        <Container>
-          <div className="mt-8 grid grid-cols-1 gap-x-6 lg:mt-12 xl:grid-cols-[252px,1fr]">
-            <SideBar
-              theme={theme}
-              preview={preview}
-              academyModules={academyModules}
-              academySlug={academySlug}
-              className="sticky top-24 hidden h-fit xl:block"
-            />
-            <div>
-              <Content content={content} />
-              <div className="mt-8 flex flex-col md:flex-row md:justify-between">
-                <Button
-                  className={clsx(buttonClasses, 'bg-black text-white')}
-                  iconStart={<BsGithub />}
-                  target="_blank"
-                  href={`${contributeBaseLink}/contents${slug}.md`}
-                >
-                  Contribute
-                </Button>
-                <div className="flex flex-col gap-x-4 md:flex-row">
-                  {prevModule ? (
-                    <Button
-                      className={clsx(buttonClasses, 'border-primary')}
-                      href={prevModule.slug}
-                      title={prevModule.title}
-                      iconStart={<IoIosArrowBack />}
-                    >
-                      Sebelumnya
-                    </Button>
-                  ) : (
-                    <Button
-                      className={clsx(buttonClasses, 'border-primary')}
-                      href={academySlug}
-                      iconStart={<IoIosArrowBack />}
-                    >
-                      Kembali ke Academy
-                    </Button>
-                  )}
-                  {nextModule ? (
-                    <Button
-                      className={clsx(buttonClasses, 'bg-primary text-white')}
-                      href={nextModule.slug}
-                      title={nextModule.title}
-                      iconEnd={<IoIosArrowForward />}
-                    >
-                      Selanjutnya
-                    </Button>
-                  ) : (
-                    <Button
-                      className={clsx(buttonClasses, 'bg-primary text-white')}
-                      href={academySlug}
-                      iconEnd={<IoIosArrowForward />}
-                    >
-                      Kembali ke Academy
-                    </Button>
-                  )}
+    <>
+      <AppHead
+        title={title}
+        description={description}
+        keywords={keywords}
+        theme={theme}
+      />
+      <Screen>
+        <Navbar />
+        <Main>
+          <Container>
+            <div className="mt-8 grid grid-cols-1 gap-x-6 lg:mt-12 xl:grid-cols-[252px,1fr]">
+              <SideBar
+                theme={theme}
+                preview={preview}
+                academyModules={academyModules}
+                academySlug={academySlug}
+                className="sticky top-24 hidden h-fit xl:block"
+              />
+              <div>
+                <Content content={content} />
+                <div className="mt-8 flex flex-col md:flex-row md:justify-between">
+                  <Button
+                    className={clsx(buttonClasses, 'bg-black text-white')}
+                    iconStart={<BsGithub />}
+                    target="_blank"
+                    href={`${contributeBaseLink}/contents${slug}.md`}
+                  >
+                    Contribute
+                  </Button>
+                  <div className="flex flex-col gap-x-4 md:flex-row">
+                    {prevModule ? (
+                      <Button
+                        className={clsx(buttonClasses, 'border-primary')}
+                        href={prevModule.slug}
+                        title={prevModule.title}
+                        iconStart={<IoIosArrowBack />}
+                      >
+                        Sebelumnya
+                      </Button>
+                    ) : (
+                      <Button
+                        className={clsx(buttonClasses, 'border-primary')}
+                        href={academySlug}
+                        iconStart={<IoIosArrowBack />}
+                      >
+                        Kembali ke Academy
+                      </Button>
+                    )}
+                    {nextModule ? (
+                      <Button
+                        className={clsx(buttonClasses, 'bg-primary text-white')}
+                        href={nextModule.slug}
+                        title={nextModule.title}
+                        iconEnd={<IoIosArrowForward />}
+                      >
+                        Selanjutnya
+                      </Button>
+                    ) : (
+                      <Button
+                        className={clsx(buttonClasses, 'bg-primary text-white')}
+                        href={academySlug}
+                        iconEnd={<IoIosArrowForward />}
+                      >
+                        Kembali ke Academy
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Container>
-      </Main>
-      <Footer />
-    </Screen>
+          </Container>
+        </Main>
+        <Footer />
+      </Screen>
+    </>
   );
 };
 

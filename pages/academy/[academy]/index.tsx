@@ -19,6 +19,7 @@ import { Footer } from '@/components/Footer';
 import { Img } from '@/components/Img';
 import { Stats } from '@/components/Stats';
 import { ModuleList } from '@/components/ModuleList';
+import { AppHead } from '@/components/AppHead';
 
 interface Props extends MatterResult {
   lastUpdate: string;
@@ -32,52 +33,61 @@ const AcademyModule: NextPage<Props> = ({
   theme,
   academyModules,
   lastUpdate,
+  keywords,
 }) => {
   return (
-    <Screen>
-      <Navbar />
-      <Header className="grid grid-cols-1 gap-x-8 pt-6 md:grid-cols-[auto,1fr,auto] xl:grid-cols-[auto,1fr,auto]">
-        <div
-          style={{ backgroundColor: theme }}
-          className="flex justify-center rounded-lg p-7"
-        >
-          <Img src={preview} alt={`${title} academy`} className="h-20 w-20" />
-        </div>
-        <div className="flex flex-col gap-y-1">
-          <Title className="max-w-4xl text-left">
-            {title} <Highlight>Academy</Highlight>
-          </Title>
-          <Paragraph className="max-w-lg text-left lg:max-w-lg">
-            {description}
-          </Paragraph>
-        </div>
-        <div>
-          <Stats
-            lastUpdate={lastUpdate ? moment(lastUpdate).fromNow() : '-'}
-            moduleLength={academyModules.length}
-          />
-        </div>
-      </Header>
+    <>
+      <AppHead
+        title={title}
+        description={description}
+        keywords={keywords}
+        theme={theme}
+      />
+      <Screen>
+        <Navbar />
+        <Header className="grid grid-cols-1 gap-x-8 pt-6 md:grid-cols-[auto,1fr,auto] xl:grid-cols-[auto,1fr,auto]">
+          <div
+            style={{ backgroundColor: theme }}
+            className="flex justify-center rounded-lg p-7"
+          >
+            <Img src={preview} alt={`${title} academy`} className="h-20 w-20" />
+          </div>
+          <div className="flex flex-col gap-y-1">
+            <Title className="max-w-4xl text-left">
+              {title} <Highlight>Academy</Highlight>
+            </Title>
+            <Paragraph className="max-w-lg text-left lg:max-w-lg">
+              {description}
+            </Paragraph>
+          </div>
+          <div>
+            <Stats
+              lastUpdate={lastUpdate ? moment(lastUpdate).fromNow() : '-'}
+              moduleLength={academyModules.length}
+            />
+          </div>
+        </Header>
 
-      <Main>
-        <Container>
-          <ul className="flex flex-col gap-y-3">
-            {academyModules.map((module) => {
-              return (
-                <ModuleList
-                  key={module.order}
-                  title={module.title}
-                  order={module.order}
-                  lastUpdate={module.lastmod}
-                  slug={module.slug}
-                />
-              );
-            })}
-          </ul>
-        </Container>
-      </Main>
-      <Footer />
-    </Screen>
+        <Main>
+          <Container>
+            <ul className="flex flex-col gap-y-3">
+              {academyModules.map((module) => {
+                return (
+                  <ModuleList
+                    key={module.order}
+                    title={module.title}
+                    order={module.order}
+                    lastUpdate={module.lastmod}
+                    slug={module.slug}
+                  />
+                );
+              })}
+            </ul>
+          </Container>
+        </Main>
+        <Footer />
+      </Screen>
+    </>
   );
 };
 
