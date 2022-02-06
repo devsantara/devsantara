@@ -2,7 +2,7 @@ import { ReactChild } from 'react';
 
 export type Children = ReactChild | ReactChild[];
 export type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
-export interface MatterMeta {
+export interface MatterResult {
   date: string;
   description: string;
   draft: true;
@@ -13,6 +13,5 @@ export interface MatterMeta {
   slug: string;
   theme: string;
   title: string;
-  length?: number;
-  content?: string;
+  content: string;
 }
