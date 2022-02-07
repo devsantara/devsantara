@@ -39,3 +39,7 @@ yarn-error.log*
 
 # storybook
 storybook-static
+
+# next pwa
+public/sw.*
+public/workbox-*
