@@ -18,6 +18,13 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+          />
+
+          <link rel="apple-touch-icon" href="/icon-192x192.png" />
+
           {/* google fonts | poppins [300, 400, 500, 600, 700] */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
@@ -43,6 +50,9 @@ class MyDocument extends Document {
           />
           {/* favicon */}
           <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+          {/* manifest */}
+          <link rel="manifest" href="/manifest.json" />
 
           {/* Global site tag (gtag.js) - Google Analytics */}
           {process.env.NODE_ENV === 'production' && (
