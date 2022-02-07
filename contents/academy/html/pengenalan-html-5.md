@@ -1,7 +1,7 @@
 ---
 title: Pengenalan HTML 5
 order: 1
-slug: /academy/html/Pengenalan-html-5
+slug: /academy/html/pengenalan-html-5
 description: Mari berkenalan dengan salah satu teknologi yang tidak dapat di pisahkan dalam pengembangan web yaitu HTML 5
 date: '2022-02-06T09:16:55.868Z'
 lastmod: '2022-02-06T10:22:21.003Z'
