@@ -13,6 +13,12 @@ const markdown = new MarkdownIt({
 
     return '';
   },
-});
+})
+  .use(require('markdown-it-video'), {
+    youtube: { width: '100%', height: 390 },
+  })
+  .use(require('markdown-it-image-figures'), {
+    figcaption: true,
+  });
 
 export { markdown };
