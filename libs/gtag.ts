@@ -9,6 +9,8 @@ type GTagEvent = {
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const gtagPageview = (url: URL) => {
+  if (window.gtag === undefined) return;
+
   window.gtag('config', GA_MEASUREMENT_ID as string, {
     page_path: url,
   });
@@ -16,6 +18,8 @@ export const gtagPageview = (url: URL) => {
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const gtagEvent = ({ action, category, label, value }: GTagEvent) => {
+  if (window.gtag === undefined) return;
+
   window.gtag('event', action, {
     event_category: category,
     event_label: label,
