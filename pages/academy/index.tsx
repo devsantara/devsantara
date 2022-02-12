@@ -118,7 +118,11 @@ export const getStaticProps: GetStaticProps = async () => {
     })
   );
 
-  const ascAcademiesContent = academiesContent.sort(
+  const nonDraftAcademies = academiesContent.filter(
+    (academy) => !academy.draft
+  );
+
+  const ascAcademiesContent = nonDraftAcademies.sort(
     (a, b) => a.order - b.order
   );
 

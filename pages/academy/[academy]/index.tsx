@@ -114,14 +114,16 @@ export const getStaticProps = async ({ params }: Context) => {
     })
   );
 
+  const nonDraftModules = academyModulesContent.filter(
+    (module) => !module.draft
+  );
+
   const lastUpdate =
-    academyModulesContent.sort((a: MatterResult, b: MatterResult) => {
+    nonDraftModules.sort((a: MatterResult, b: MatterResult) => {
       return moment(b.lastmod).unix() - moment(a.lastmod).unix();
     })[0]?.lastmod || null;
 
-  const ascAcademyModules = academyModulesContent.sort(
-    (a, b) => a.order - b.order
-  );
+  const ascAcademyModules = nonDraftModules.sort((a, b) => a.order - b.order);
 
   return {
     props: {
